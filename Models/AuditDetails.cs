@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuditManagementPortal.Models
 {
-    public partial class Audit
+    public class AuditDetails
     {
         public int Auditid { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManagerName { get; set; }
         public string ApplicationOwnerName { get; set; }
         public string AuditType { get; set; }
+        public int CountOfNos { get; set; }
         public DateTime? AuditDate { get; set; }
         public string ProjectExecutionStatus { get; set; }
         public string RemedialActionDuration { get; set; }

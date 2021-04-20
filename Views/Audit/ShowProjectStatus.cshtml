@@ -1,0 +1,120 @@
+﻿@model AuditManagementPortal.Models.Audit
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Audit Details</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/css/all.css" rel="stylesheet" />
+    <!-- icheck bootstrap -->
+    <link href="~/css/icheck-bootstrap.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="~/css/adminlte.css" rel="stylesheet" />
+    <style>
+        #list {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #list td, #list th {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+@if (Model.ProjectExecutionStatus == "GREEN")
+{
+    <body class="hold-transition login-page" style="background: linear-gradient(to bottom left, #99ffcc 0%, #ffffcc 100%);">
+        <div class="login-box">
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <h4 style="font-weight:bold;text-align:center;">Audit Details</h4>
+                    <table id="list">
+                        <tr>
+                            <th>Project Name</th>
+                            <td>@Model.ProjectName</td>
+                        </tr>
+                        <tr>
+                            <th>Project Manager Name</th>
+                            <td>@Model.ProjectManagerName</td>
+                        </tr>
+                        <tr>
+                            <th>Application Owner Name</th>
+                            <td>@Model.ApplicationOwnerName</td>
+                        </tr>
+                        <tr>
+                            <th>Audit Date and time</th>
+                            <td>@Model.AuditDate</td>
+                        </tr>
+                        <tr>
+                            <th>Audit Type</th>
+                            <td>@Model.AuditType</td>
+                        </tr>
+                        <tr>
+                            <th>Remidial Action Duration</th>
+                            <td>@Model.RemedialActionDuration</td>
+                        </tr>
+                        <tr>
+                            <th>Project Execution Status</th>
+                            <td>@Model.ProjectExecutionStatus</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+}
+@if (Model.ProjectExecutionStatus == "RED")
+{
+    <body class="hold-transition login-page" style="background: linear-gradient(to right, #ff9999 0%, #ffcc99 100%);">
+        <div class="login-box">
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <h4 style="font-weight:bold;text-align:center">Audit Details</h4>
+                    <br/>
+                    <table id="list">
+                        <tr>
+                            <th>Project Name</th>
+                            <td>@Model.ProjectName</td>
+                        </tr>
+                        <tr>
+                            <th>Project Manager Name</th>
+                            <td>@Model.ProjectManagerName</td>
+                        </tr>
+                        <tr>
+                            <th>Application Owner Name</th>
+                            <td>@Model.ApplicationOwnerName</td>
+                        </tr>
+                        <tr>
+                            <th>Audit Date and time</th>
+                            <td>@Model.AuditDate</td>
+                        </tr>
+                        <tr>
+                            <th>Audit Type</th>
+                            <td>@Model.AuditType</td>
+                        </tr>
+                        <tr>
+                            <th>Remidial Action Duration</th>
+                            <td>@Model.RemedialActionDuration</td>
+                        </tr>
+                        <tr>
+                            <th>Project Execution Status</th>
+                            <td>@Model.ProjectExecutionStatus</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+}
+</html>
+
+

@@ -52,6 +52,7 @@ namespace AuditManagementPortal.Controllers
                         {
                             _log4net.Info("Login Was Done With Email " + Userdetails.Email + " And the Right Password");
                             ViewBag.message = "Success";
+                            return RedirectToAction("ChooseAuditType","Audit");
                         }
                     }
                 }
@@ -62,5 +63,8 @@ namespace AuditManagementPortal.Controllers
                 return View();
             }
         }
+
+        
+
     }
 }
