@@ -47,7 +47,7 @@ namespace AuditManagementPortal
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Login}/{id?}");
             });
 
             loggerFactory.AddLog4Net();

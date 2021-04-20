@@ -57,7 +57,7 @@ namespace AuditManagementPortal.Controllers
                 }
                 catch (Exception e)
                 {
-                    ViewBag.Message = e.Message; //"Login API not Loaded. Please Try Later.";
+                    ViewBag.Message = "Login API not Loaded. Please Try Later.";
                 }
                 return View();
             }
