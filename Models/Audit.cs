@@ -17,5 +17,7 @@ namespace AuditManagementPortal.Models
         public DateTime? AuditDate { get; set; }
         public string ProjectExecutionStatus { get; set; }
         public string RemedialActionDuration { get; set; }
+        public int Userid { get; set; }
+        public virtual Userdetails Userdetail { get; set; }
     }
 }

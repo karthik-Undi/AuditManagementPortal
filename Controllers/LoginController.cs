@@ -7,6 +7,7 @@ using AuditManagementPortal.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace AuditManagementPortal.Controllers
 {
@@ -15,7 +16,7 @@ namespace AuditManagementPortal.Controllers
         static readonly log4net.ILog _log4net = log4net.LogManager.GetLogger(typeof(LoginController));
        
         //string token;
-        static string token = "";
+        static TokenAndUserID tokenAndUserID = new TokenAndUserID();
 
         public IActionResult Index()
         {
@@ -39,8 +40,8 @@ namespace AuditManagementPortal.Controllers
                     {
 
                         var Response = response.Content.ReadAsStringAsync().Result;
-                        token = Response;
-                        TempData["token"] = token;
+                        tokenAndUserID = JsonConvert.DeserializeObject<TokenAndUserID>(Response);
+
 
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                         {
@@ -52,6 +53,9 @@ namespace AuditManagementPortal.Controllers
                         {
                             _log4net.Info("Login Was Done With Email " + Userdetails.Email + " And the Right Password");
                             ViewBag.message = "Success";
+                            HttpContext.Session.SetString("token", tokenAndUserID.Token);
+                            HttpContext.Session.SetInt32("UserId", tokenAndUserID.UserId);
+                            
                             return RedirectToAction("ChooseAuditType","Audit");
                         }
                     }

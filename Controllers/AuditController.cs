@@ -8,6 +8,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
 
 namespace AuditManagementPortal.Controllers
 {
@@ -23,40 +24,50 @@ namespace AuditManagementPortal.Controllers
         }
         public IActionResult ChooseAuditType()
         {
-            _log4net.Info("ChooseAuditType Was Called !!");
-            return View();
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                TempData["UserId"] = HttpContext.Session.GetInt32("UserId");
+                _log4net.Info("ChooseAuditType Was Called !!");
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
         }
         [HttpPost]
         public async Task<IActionResult> ChooseAuditType(string AuditType)
         {
-            _log4net.Info("ChooseAuditType Was Called !!");
-            using (var httpClient = new HttpClient())
-            {
-                try
+                _log4net.Info("ChooseAuditType Was Called !!");
+                using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync("http://localhost:19133/api/AuditCheckList?auditType=" + AuditType))
+                    try
                     {
-                        if (response.IsSuccessStatusCode)
+                        using (var response = await httpClient.GetAsync("http://localhost:19133/api/AuditCheckList/" + AuditType))
                         {
-                            _log4net.Info("AuditCheckList API with Audit type  " + AuditType + "was called");
-                            ViewBag.message = "Success";
-                            var Response = response.Content.ReadAsStringAsync().Result;
-                            questionsAndTypes = JsonConvert.DeserializeObject<List<QuestionsAndType>>(Response);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                _log4net.Info("AuditCheckList API with Audit type  " + AuditType + "was called");
+                                ViewBag.message = "Success";
+                                var Response = response.Content.ReadAsStringAsync().Result;
+                                questionsAndTypes = JsonConvert.DeserializeObject<List<QuestionsAndType>>(Response);
+                            }
                         }
                     }
+                    catch (Exception e)
+                    {
+                        ViewBag.Message = "AuditChecklist API not Loaded. Please Try Later.";
+                        return View();
+                    }
+                    return RedirectToAction("ShowQuestions");
                 }
-                catch (Exception e)
-                {
-                    ViewBag.Message = "Login API not Loaded. Please Try Later.";
-                }
-                return RedirectToAction("ShowQuestions");
-            }
 
         }
         public IActionResult ShowQuestions()
         {
-            _log4net.Info("ChooseAuditType Was Called !!");
-            return View(questionsAndTypes);
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                _log4net.Info("ChooseAuditType Was Called !!");
+                return View(questionsAndTypes);
+            }
+            return RedirectToAction("Login", "Login");
         }
         [HttpPost]
         public async Task<IActionResult> ShowQuestions(string projectname,string projectmanagername,string appownername,int radio1, int radio2, int radio3, int radio4, int radio5)
@@ -69,6 +80,7 @@ namespace AuditManagementPortal.Controllers
             auditDetails.ProjectManagerName = projectmanagername;
             auditDetails.ProjectName = projectname;
             auditDetails.AuditType = questionsAndTypes[0].AuditType;
+            auditDetails.Userid = Convert.ToInt32(TempData.Peek("UserId"));
             _log4net.Info("ChooseAuditType Was Called !!");
             using (var httpClient = new HttpClient())
             {
@@ -88,7 +100,8 @@ namespace AuditManagementPortal.Controllers
                 }
                 catch (Exception e)
                 {
-                    ViewBag.Message = "Login API not Loaded. Please Try Later.";
+                    ViewBag.Message = "Audit Severity API not Loaded. Please Try Later.";
+                    return View();
                 }
                 return RedirectToAction("ShowProjectStatus");
             }
@@ -96,8 +109,18 @@ namespace AuditManagementPortal.Controllers
 
         public IActionResult ShowProjectStatus()
         {
-            _log4net.Info("ShowProjectStatus Was Called !!");
-            return View(audit);
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                _log4net.Info("ShowProjectStatus Was Called !!");
+                return View(audit);
+            }
+            return RedirectToAction("Login", "Login");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login","Login");
         }
     }
 }
