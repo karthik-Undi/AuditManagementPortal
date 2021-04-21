@@ -34,7 +34,7 @@ namespace AuditManagementPortal.Controllers
             {
                 try
                 {
-                    using (var response = await httpClient.GetAsync("http://localhost:19133/api/AuditCheckList?auditType=" + AuditType))
+                    using (var response = await httpClient.GetAsync("http://localhost:19133/api/AuditCheckList/" + AuditType))
                     {
                         if (response.IsSuccessStatusCode)
                         {
