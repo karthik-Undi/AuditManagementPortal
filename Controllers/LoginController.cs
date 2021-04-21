@@ -8,6 +8,8 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace AuditManagementPortal.Controllers
 {
@@ -55,7 +57,19 @@ namespace AuditManagementPortal.Controllers
                             ViewBag.message = "Success";
                             HttpContext.Session.SetString("token", tokenAndUserID.Token);
                             HttpContext.Session.SetInt32("UserId", tokenAndUserID.UserId);
-                            
+                            var captcharesponse = Request.Form["g-recaptcha-response"];
+                            string secretKey = "6Lcs0LIaAAAAAFYxmFi4KziD-m744DcpRQFZzKqj";
+                            var client = new WebClient();
+                            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, captcharesponse));
+                            var obj = JObject.Parse(result);
+                            var status = (bool)obj.SelectToken("success");
+                            ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation failed";
+                            if (status == false)
+                            {
+                                ViewBag.Message = "Please verify reCaptcha";
+                                return View();
+                            }
+
                             return RedirectToAction("ChooseAuditType","Audit");
                         }
                     }

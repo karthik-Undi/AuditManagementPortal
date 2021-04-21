@@ -5,8 +5,11 @@
     Layout = null;
 
 }
+
 <link href="~/css/showq.css" rel="stylesheet" />
 <form asp-action="ShowQuestions">
+    <h2 style="text-align:center;"><b>Audit Management System</b></h2>
+    
     <h3 style="text-align:center;font-weight:bold">Please fill in the below details</h3>
     <h5 style="text-align:center;font-weight:bold">Audit Type : @Model.ElementAt(0).AuditType</h5>
 
@@ -19,7 +22,7 @@
     <div class="box">
         <input type="radio" id="q1y" name="radio1" required value="0" />
         <label for="q1y">Yes</label>
-        
+
         <input type="radio" id="q1n" name="radio1" value="1" />
         <label for="q1n">No</label>
     </div>
@@ -60,8 +63,8 @@
         <label for="q5n">No</label>
     </div>
     <div class="form-group">
-        <input type="submit" value="Get Status" class="btn btn-primary" />
-        <input type="button" value="Logout" class="btn btn-primary" onclick="location.href='@Url.Action("Logout","Audit")'" />
+        <input type="submit" value="Get Status" class="btn btn-primary" id="showbutton" />
+        <input type="button" value="Logout" class="btn btn-primary" onclick="location.href='@Url.Action("Logout","Audit")'" id="showbutton" />
     </div>
     <div>
         @ViewBag.Message
