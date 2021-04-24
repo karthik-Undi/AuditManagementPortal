@@ -69,7 +69,7 @@ namespace AuditManagementPortal.Controllers
                                 ViewBag.Message = "Please verify reCaptcha";
                                 return View();
                             }
-
+                            TempData.Clear();
                             return RedirectToAction("ChooseAuditType","Audit");
                         }
                     }
