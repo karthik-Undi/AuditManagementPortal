@@ -35,8 +35,9 @@
         </div>
     </div>
 }
-<p style="color:red">
+<p style="color:red;font-size:15px;">
 @ViewBag.message
+    @TempData.Peek("ErrorMessage")
     </p>
 <div>
     @Html.ActionLink("clear", "Login")

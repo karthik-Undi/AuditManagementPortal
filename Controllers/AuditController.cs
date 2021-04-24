@@ -51,7 +51,7 @@ namespace AuditManagementPortal.Controllers
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         ViewBag.Message = "AuditChecklist API not Loaded. Please Try Later.";
                         return View();
@@ -98,10 +98,10 @@ namespace AuditManagementPortal.Controllers
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    ViewBag.Message = "Audit Severity API not Loaded. Please Try Later.";
-                    return View();
+                    TempData["ErrorMessage"] = "Audit Severity and Audit Benchmark APIs not Loaded. Please Try Later.";
+                    return RedirectToAction("Login", "Login");
                 }
                 return RedirectToAction("ShowProjectStatus");
             }
